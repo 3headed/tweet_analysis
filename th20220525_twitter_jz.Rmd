@@ -47,6 +47,36 @@ zzh_tweets<-tweets_extract_plot(c("#zhangzhehan"),"#zhangzhehan")
 gj_tweets<-tweets_extract_plot(c("#gongjun"),"#gongjun")
 jz_tweets<-tweets_extract_plot(c("#junzhe"),"#junzhe")
 ```
+Quick info on which timespan the datasets cover and how many tweets per day
+```{r}
+#calculate rate of tweets per hour
+tweet_stats<-function(data,title){
+  print(paste("dataset:",title))
+  print(paste("number of tweets:",nrow(data)))
+  start<-data[nrow(data),]$created_at
+  end<-data[1,]$created_at
+  print(paste("start:",start))
+  print(paste("end:",end))
+  diff = end - start
+  print(diff)
+  #tweets per day
+  tw_p_day<-round(nrow(data)/as.numeric(diff),2)
+  print(paste("tweets per day:",tw_p_day))
+  return(tw_p_day)
+}
+
+st_zzh<-tweet_stats(zzh_tweets,"#zhangzhehan")
+
+st_gj<-tweet_stats(gj_tweets,"#gongjun")
+
+st_jz<-tweet_stats(jz_tweets,"#junzhe")
+
+bargraph<-data.frame(group=c("zhangzhehan","gongjun","junzhe"),tweets_per_day=c(st_zzh,st_gj,st_jz))
+
+ggplot(bargraph,aes(x=group,y=tweets_per_day))+
+  geom_col()
+```
+
 Next let's make a Venn diagram to see the overlap between accounts tweeting about "Junzhe" "Zhang Zhehan" or "Gong Jun".
 I have to use 2 Venn diagram packages because gplots gives me the numbers+intersections but only venneuler lets me make a beautiful diagram with proportional circle areas.
 
