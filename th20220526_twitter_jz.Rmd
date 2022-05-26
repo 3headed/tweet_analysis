@@ -151,6 +151,33 @@ lapply(seq_along(venn_slices), function(i) get_tweet_counts(names(x)[[i]], x[[i]
 ```
 
 
+Now I have information on which accounts are also tweeting about the other two hashtags I looked at. Will now add this information to initial bar plot showing tweet counts per hashtag
+
+```{r}
+#extract user names for each slice of venn diagram
+#transfer user names and slice association to new data frame
+add_venn_slice_info<-function(index,data){
+  df_out<-data.frame(data,index)
+  names(df_out)<-c("screen_name","venn_slice")
+  return(df_out)
+}
+
+venn_slice_users<-lapply(seq_along(venn_slices), function(i) add_venn_slice_info(names(x)[[i]], x[[i]]))%>% bind_rows()
+tweets_all<-(merge(tweets_all,venn_slice_users,by="screen_name"))
+
+unique(venn_slice_users$venn_slice)
+
+ggplot(tweets_all,aes(x=group,fill=venn_slice))+
+  geom_bar()+
+  scale_fill_manual(values = c("ZZH:JunZhe"="blueviolet", 
+            "ZZH:JunZhe:GJ" ="purple",
+            "GJ" = "red",
+            "ZZH" = "blue",
+            "JunZhe" =  "violet",
+            "ZZH:GJ" = "yellow",
+            "JunZhe:GJ"= "magenta"))
+```
+
 
 
 
