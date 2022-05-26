@@ -18,7 +18,7 @@ library(dplyr)
 In this analysis I will first extract tweets mentioning "#zhangzhehan", "#gongjun" or "#junzhe" and then check the overlap between accounts tweeting about these topics. 
 After playing around a bit I decided to use only hashtags instead of full names to focus on dedicated tweets instead of casual mentions.
 
-First let's get the tweets via Twitter API. Please note that there is a rate limit of up to 18000 tweets per day. Nonetheless, I never manage to get the maximum of 6000 tweets per query for some reason. Therefore this search is last to the last couple of days.
+First let's get the tweets via Twitter API. Please note that there is a rate limit of up to 18000 tweets per day. Nonetheless, I never manage to get the maximum of 6000 tweets per query for some reason. Therefore this search is limited to the last couple of days.
 
 I will then plot the accounts with the most tweets about these topics.
 ```{r}
@@ -78,10 +78,10 @@ ggplot(bargraph,aes(x=group,y=tweets_per_day))+
   geom_col()
 ```
 
-Next let's make a Venn diagram to see the overlap between accounts tweeting about "Junzhe" "Zhang Zhehan" or "Gong Jun".
+Next let's make a Venn diagram to see the overlap between accounts tweeting about #junzh, #zhangzhehan or #gongjun.
 I have to use 2 Venn diagram packages because gplots gives me the numbers+intersections but only venneuler lets me make a beautiful diagram with proportional circle areas.
 
-Note: This plot is not based on tweets containing the respective topics in combination. Instead it plots, e.g. how often accounts mentioning "ZZH" have also mentioned "Gong Jun", this can be in the same or different tweets.
+Note: This plot is not based on tweets containing the respective topics in combination. Instead it plots, e.g. how often accounts mentioning #zhangzhehan have also mentioned #gongjun, this can be in the same or different tweets.
 ```{r}
 ###Venn diagram
 library(gplots)
@@ -106,7 +106,7 @@ v <- venneuler(numbers_venn)
 plot(v)
 ```
 
-Finally let's plot the top accounts tweeting about the respective topics+combinations. In these plots, for example the "Zhang Zhehan" accounts are the accounts with the most tweets not mentioning the other topics.
+Finally let's plot the top accounts tweeting about the respective topics+combinations. In these plots, for example the #zhangzhehan accounts are the accounts with the most tweets not mentioning the other topics.
 
 ```{r}
 ###top accounts n venn diagram slices
