@@ -7,7 +7,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F)
 ```
 ```{r packages, include=FALSE}
 library(rtweet)
@@ -151,7 +151,7 @@ lapply(seq_along(venn_slices), function(i) get_tweet_counts(names(x)[[i]], x[[i]
 ```
 
 
-Now I have information on which accounts are also tweeting about the other two hashtags I looked at. Will now add this information to initial bar plot showing tweet counts per hashtag
+Now I have information on which accounts are also tweeting about the other two hashtags I looked at. Will now add this information to bar plot showing tweet counts per hashtag
 
 ```{r}
 #extract user names for each slice of venn diagram
@@ -165,8 +165,25 @@ add_venn_slice_info<-function(index,data){
 venn_slice_users<-lapply(seq_along(venn_slices), function(i) add_venn_slice_info(names(x)[[i]], x[[i]]))%>% bind_rows()
 tweets_all<-(merge(tweets_all,venn_slice_users,by="screen_name"))
 
-unique(venn_slice_users$venn_slice)
+#unique(venn_slice_users$venn_slice)
 
+t<-table(tweets_all$group,tweets_all$venn_slice)
+t
+
+print("percent of ZZH tweets from 'pure' ZZH accounts")
+t[3,4] / sum(t[3,1:7])
+print("percent of ZZH tweets from GJ-mentioning accounts")
+t[3,5] / sum(t[3,1:7])
+print("percent of ZZH tweets from CP-related accounts")
+(sum(t[3,1:7]) - t[3,4] - t[3,5]) / sum(t[3,1:7])
+ 
+print("percent of GJ tweets from 'pure' GJ accounts")
+t[1,1] / sum(t[1,1:7])
+print("percent of GJ tweets from ZZH-mentioning accounts")
+t[1,5] / sum(t[1,1:7])
+print("percent of GJ tweets from CP-related accounts")
+(sum(t[1,1:7]) - t[1,1] - t[1,5]) / sum(t[1,1:7])                                      
+                                       
 ggplot(tweets_all,aes(x=group,fill=venn_slice))+
   geom_bar()+
   scale_fill_manual(values = c("ZZH:JunZhe"="blueviolet", 
