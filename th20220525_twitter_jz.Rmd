@@ -1,9 +1,9 @@
 ---
 title: "Twitter zzh-gj-jz association"
 output:
-  pdf_document: default
   html_document: default
-date: '2022-05-25'
+  pdf_document: default
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
 ```{r setup, include=FALSE}
@@ -47,6 +47,7 @@ zzh_tweets<-tweets_extract_plot(c("#zhangzhehan"),"#zhangzhehan")
 gj_tweets<-tweets_extract_plot(c("#gongjun"),"#gongjun")
 jz_tweets<-tweets_extract_plot(c("#junzhe"),"#junzhe")
 ```
+
 Quick info on which timespan the datasets cover and how many tweets per day
 ```{r}
 #calculate rate of tweets per hour
@@ -104,7 +105,8 @@ library(venneuler)
 v <- venneuler(numbers_venn)
 plot(v)
 ```
-Finally let's plot the top accounts tweeting about the respective topics+combinations. In these plots, for example the "Zhang Zhehan" accounts are the "pure" accounts not mentioning the other two topics.
+
+Finally let's plot the top accounts tweeting about the respective topics+combinations. In these plots, for example the "Zhang Zhehan" accounts are the accounts with the most tweets not mentioning the other topics.
 
 ```{r}
 ###top accounts n venn diagram slices
