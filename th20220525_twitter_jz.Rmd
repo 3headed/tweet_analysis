@@ -1,8 +1,8 @@
 ---
 title: "Twitter zzh-gj-jz association"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
@@ -18,7 +18,7 @@ library(dplyr)
 In this analysis I will first extract tweets mentioning "#zhangzhehan", "#gongjun" or "#junzhe" and then check the overlap between accounts tweeting about these topics. 
 After playing around a bit I decided to use only hashtags instead of full names to focus on dedicated tweets instead of casual mentions.
 
-First let's get the tweets via Twitter API. Please note that there is a rate limit of up to 18000 tweets per day. Nonetheless, I never manage to get the maximum of 6000 tweets per query for some reason. Tweet search is also limited to the last 4 days. 
+First let's get the tweets via Twitter API. Please note that there is a rate limit of up to 18000 tweets per day. Nonetheless, I never manage to get the maximum of 6000 tweets per query for some reason. Therefore this search is last to the last couple of days.
 
 I will then plot the accounts with the most tweets about these topics.
 ```{r}
